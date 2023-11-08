@@ -51,11 +51,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     android     = models.BooleanField
     ios         = models.BooleanField
 
-    
-    
-    
-    
-
+    # 오픈채팅
+    kakao = models.CharField
     # is_superuser = models.BooleanField(default=False)
     # is_active = models.BooleanField(default=True)
     # is_staff = models.BooleanField(default=False)
@@ -67,3 +64,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 	# 사용자의 username field는 email으로 설정 (이메일로 로그인)
     USERNAME_FIELD = 'email'
+
+class Spec(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    spec = models.TextField()
+
+    def __str__(self):
+        return self.spec
+        
