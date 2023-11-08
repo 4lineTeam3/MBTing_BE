@@ -11,6 +11,26 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 
+MBTIDic = {
+    'ENTP': ['INFJ', 'INTJ'],
+    'ENFP': ['INTJ', 'INFJ'],
+    'ESTP': ['ISFJ', 'ISTJ'],
+    'ENTJ': ['INTP', 'INFP'],
+    'ESTJ': ['ISFP', 'ISTP'],
+    'ESFP': ['ISTJ', 'ISFJ'],
+    'ENFJ': ['INFP', 'ISFP'],
+    'ESFJ': ['ISTP', 'INTP'],
+    'INTP': ['ESTJ', 'ENTJ'],
+    'INFP': ['ENFJ', 'ENTJ'],
+    'ISTP': ['ESFJ', 'ESTJ'],
+    'INTJ': ['ENFP', 'ENTP'],
+    'ISTJ': ['ESFP', 'ESTP'],
+    'ISFP': ['ESFJ', 'ENFJ'],
+    'INFJ': ['ENFP', 'ENTP'],
+    'ISFJ': ['ESTP', 'ESFP']
+}
+
+
 # Create your views here.
 class RegisterAPIView(APIView):
     def post(self, request):
