@@ -8,7 +8,7 @@ from .serializers import *
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework import status, viewsets
 from rest_framework.response import Response
-
+from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
@@ -76,9 +76,11 @@ class AuthAPIView(APIView):
 
     # 로그인
     def post(self, request):
-    	# 유저 인증
-        user = _Authenticator(
-            email=request.data.get("email"), password=request.data.get("password")
+        # 유저 인증
+        email2  = request.data.get("email")
+        user = authenticate(
+            email=request.data.get("email"), 
+            password=request.data.get("password")
         )
         # 이미 회원가입 된 유저일 때
         if user is not None:
