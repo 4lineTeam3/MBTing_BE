@@ -166,8 +166,9 @@ class RelationMBTI(generics.ListAPIView):
         mbti = user.mbti
         relate = MBTIDic[mbti]
 
-        queryset += User.objects.filter(mbti=relate[0])
-        queryset += User.objects.filter(mbti=relate[1])
+        queryset=User.objects.all()
+        queryset = queryset | User.objects.filter(mbti=relate[0])
+        queryset = queryset | User.objects.filter(mbti=relate[1])
         queryset = queryset
         serializer = UserSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -177,8 +178,17 @@ class ResultMBTI(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    # def patch(self, request, *args, **kwargs):
+    #     return super().patch(request, *args, **kwargs)
     def patch(self, request, *args, **kwargs):
-        return super().patch(request, *args, **kwargs)
+        user_id = request.COOKIES['user_id']
+        user = get_object_or_404(User, id=user_id)
+        #mbti = request.GET['mbti']
+        mbti = "ENTJ"
+        user.mbti = mbti
+        print(user.mbti)
+        user.save()
+        return Response(status=status.HTTP_200_OK)
 
 # class ResultMBTI(APIView):
 #     def put(self, request):
