@@ -173,7 +173,7 @@ class RelationMBTI(generics.ListAPIView):
         serializer = UserSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-# 10개의 질문이 끝나고, 결과 MBTI 넣기
+# 10개의 질문이 끝나고, 결과 MBTI 넣기 
 class ResultMBTI(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -182,7 +182,8 @@ class ResultMBTI(generics.RetrieveUpdateAPIView):
     #     return super().patch(request, *args, **kwargs)
     def patch(self, request, *args, **kwargs):
         user_id = request.COOKIES['user_id']
-        user = get_object_or_404(User, id=user_id)
+        user = get_object_or_404(User, pk=user_id)
+        ################################ 프론트 값에 따라 수정 필요################################
         #mbti = request.GET['mbti']
         mbti = "ENTJ"
         user.mbti = mbti
