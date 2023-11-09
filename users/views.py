@@ -152,26 +152,18 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 # 본인의 MBTI와 연관된 2개의 MBTI User 보내기
-class RelationMBTI(generics.ListAPIView):
+class RelationMBTI(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # permission_classes = [IsAdminUser]
 
-    def list(self, request):
-        # Note the use of `get_queryset()` instead of `self.queryset`
+    def retrieve(self, request, *args, **kwargs):
         user_id = request.COOKIES['user_id']
-        print(user_id)
         user = get_object_or_404(User, id=user_id)
-        print(user)
-        mbti = user.mbti
-        relate = MBTIDic[mbti]
-
-        queryset=User.objects.all()
-        queryset = queryset | User.objects.filter(mbti=relate[0])
-        queryset = queryset | User.objects.filter(mbti=relate[1])
-        queryset = queryset
-        serializer = UserSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        user_mbti = user.mbti
+        related_mbti = MBTIDic.get(user_mbti, [])  # user_mbti에 대한 관련 MBTI 가져오기
+        print(related_mbti)
+        # 관련 MBTI를 반환할 수 있도록 필요에 맞게 처리
+        return Response({'related_mbti': related_mbti})
 
 # 10개의 질문이 끝나고, 결과 MBTI 넣기 
 class ResultMBTI(generics.RetrieveUpdateAPIView):
@@ -182,7 +174,7 @@ class ResultMBTI(generics.RetrieveUpdateAPIView):
     #     return super().patch(request, *args, **kwargs)
     def patch(self, request, *args, **kwargs):
         user_id = request.COOKIES['user_id']
-        user = get_object_or_404(User, pk=user_id)
+        user = get_object_or_404(User, pk=user_id) #id=user_id pk값으로 변경
         ################################ 프론트 값에 따라 수정 필요################################
         #mbti = request.GET['mbti']
         mbti = "ENTJ"
