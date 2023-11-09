@@ -14,8 +14,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from config import settings
 
 from users.views import AuthAPIView, RegisterAPIView, UserViewSet
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -36,4 +38,8 @@ urlpatterns = [
     path("", include(router.urls)), #테스트용 viewset
     path("relate/", RelationMBTI.as_view()),
     path("result/<int:pk>", ResultMBTI.as_view()),
+    path('update_profile/<int:pk>', UserProfileUpdateView.as_view()),
+
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

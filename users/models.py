@@ -38,24 +38,25 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     
     email       = models.EmailField(max_length=30, unique=True, null=True, blank=True)
-    nickname    = models.CharField
-    phoneNum    = models.CharField
-    age         = models.IntegerField
-    #True 일 경우 복수 선택 가능하게
-    frontEnd    = models.BooleanField
-    backEnd     = models.BooleanField
-    uiux        = models.BooleanField
-    #True 일 경우 복수 선택 가능하게
-    mobile      = models.BooleanField
-    web         = models.BooleanField
-    android     = models.BooleanField
-    ios         = models.BooleanField
+    nickname    = models.CharField(max_length=50, null=True)
+    phoneNum    = models.CharField(max_length=50, null=True)
+    age         = models.IntegerField(null=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+    # 개발 파트 / True 일 경우 복수 선택 가능하게
+    frontEnd    = models.BooleanField(null=True)
+    backEnd     = models.BooleanField(null=True)
+    uiux        = models.BooleanField(null=True)
+    # 개발 영역 / True 일 경우 복수 선택 가능하게
+    mobile      = models.BooleanField(null=True)
+    web         = models.BooleanField(null=True)
+    android     = models.BooleanField(null=True)
+    ios         = models.BooleanField(null=True)
 
     #mbti 
     mbti        =models.CharField(null=True, blank=True, max_length=50)
 
     # 오픈채팅
-    kakao = models.CharField
+    kakao = models.CharField(max_length= 150, null=True)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -70,7 +71,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Spec(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    spec = models.TextField()
+    spec = models.TextField(null=True)
 
     def __str__(self):
         return self.spec
