@@ -25,7 +25,8 @@ class UserProfileUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ('nickname', 'phoneNum', 'age', 'profile_picture', 'frontEnd', 'backEnd', 'uiux', 'mobile', 'web', 'android', 'ios', 'kakao')
+
         depth =1
 
 class SpecSerializer(serializers.ModelSerializer):
