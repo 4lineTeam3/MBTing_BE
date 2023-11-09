@@ -55,6 +55,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     #mbti 
     mbti        =models.CharField(null=True, blank=True, max_length=50)
 
+    # spec
+    spec1 = models.CharField(null=True,max_length=100)
+    spec2 = models.CharField(null=True,max_length=100)
+    spec3 = models.CharField(null=True,max_length=100)
+    spec4 = models.CharField(null=True,max_length=100)
+    
     # 오픈채팅
     kakao = models.CharField(max_length= 150, null=True)
     is_superuser = models.BooleanField(default=False)
@@ -68,11 +74,3 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 	# 사용자의 username field는 email으로 설정 (이메일로 로그인)
     USERNAME_FIELD = 'email'
-
-class Spec(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    spec = models.TextField(null=True)
-
-    def __str__(self):
-        return self.spec
-        

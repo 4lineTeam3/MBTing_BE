@@ -1,4 +1,4 @@
-from .models import User,Spec
+from .models import User
 from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
@@ -25,12 +25,7 @@ class UserProfileUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('nickname', 'phoneNum', 'age', 'profile_picture', 'frontEnd', 'backEnd', 'uiux', 'mobile', 'web', 'android', 'ios', 'kakao')
+        fields = ('nickname', 'phoneNum', 'age', 'profile_picture', 'frontEnd', 'backEnd', 'uiux', 'mobile', 'web', 'android', 'ios', 'kakao','spec1','spec2','spec3','spec4')
 
         depth =1
-
-class SpecSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Spec
-        fields = ('spec',)
 
