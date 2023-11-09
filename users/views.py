@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 import jwt
 from rest_framework.views import APIView
 
-from config.settings import SECRET_KEY
+from config.settings.base import SECRET_KEY
 from .serializers import *
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework import status, viewsets
