@@ -199,4 +199,12 @@ class UserProfileUpdateView(generics.UpdateAPIView):
     serializer_class = UserProfileUpdateSerializer
 
     def patch(self, request, *args, **kwargs):
+        user_id = request.COOKIES.get('user_id')
+        user = get_object_or_404(User, id=user_id)
+        kakao = request.data.get('kakao')
+
+        if kakao:
+            user.kakao = kakao
+            user.save()
+
         return self.partial_update(request, *args, **kwargs)

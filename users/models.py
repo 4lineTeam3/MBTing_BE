@@ -62,7 +62,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     spec4 = models.CharField(null=True,max_length=100)
     
     # 오픈채팅
-    kakao = models.CharField(max_length= 150, null=True)
+    kakao = models.URLField(null=True, blank=True)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
