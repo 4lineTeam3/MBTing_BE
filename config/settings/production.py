@@ -5,7 +5,7 @@ from .base import *
 # 실제 배포시 False로 바꾸기 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['52.79.235.209']
 DJANGO_APPS +=[
 
 ]
