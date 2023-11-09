@@ -51,6 +51,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     android     = models.BooleanField
     ios         = models.BooleanField
 
+    #mbti 
+    mbti        =models.CharField(null=True, blank=True, max_length=50)
+
     # 오픈채팅
     kakao = models.CharField
     is_superuser = models.BooleanField(default=False)

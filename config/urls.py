@@ -34,4 +34,6 @@ urlpatterns = [
     path("auth/", AuthAPIView.as_view()), # post - 로그인, delete - 로그아웃, get - 유저정보
     path("auth/refresh/", TokenRefreshView.as_view()), # jwt 토큰 재발급
     path("", include(router.urls)), #테스트용 viewset
+    path("relate/", RelationMBTI.as_view()),
+    path("result/<int:pk>", ResultMBTI.as_view()),
 ]

@@ -9,6 +9,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, Toke
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 
 MBTIDic = {
@@ -109,6 +110,7 @@ class AuthAPIView(APIView):
             token = TokenObtainPairSerializer.get_token(user)
             refresh_token = str(token)
             access_token = str(token.access_token)
+            user = get_object_or_404(User, email=email2)
             res = Response(
                 {
                     "user": serializer.data,
@@ -123,6 +125,8 @@ class AuthAPIView(APIView):
             # jwt 토큰 => 쿠키에 저장
             res.set_cookie("access", access_token, httponly=True)
             res.set_cookie("refresh", refresh_token, httponly=True)
+            res.set_cookie('user_id', user.id, httponly=True)
+
             return res
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -135,6 +139,7 @@ class AuthAPIView(APIView):
             }, status=status.HTTP_202_ACCEPTED)
         response.delete_cookie("access")
         response.delete_cookie("refresh")
+        response.delete_cookie("user_id")
         return response
     
 
@@ -145,3 +150,43 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+# 본인의 MBTI와 연관된 2개의 MBTI User 보내기
+class RelationMBTI(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    # permission_classes = [IsAdminUser]
+
+    def list(self, request):
+        # Note the use of `get_queryset()` instead of `self.queryset`
+        user_id = request.COOKIES['user_id']
+        print(user_id)
+        user = get_object_or_404(User, id=user_id)
+        print(user)
+        mbti = user.mbti
+        relate = MBTIDic[mbti]
+
+        queryset += User.objects.filter(mbti=relate[0])
+        queryset += User.objects.filter(mbti=relate[1])
+        queryset = queryset
+        serializer = UserSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+# 10개의 질문이 끝나고, 결과 MBTI 넣기
+class ResultMBTI(generics.RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def patch(self, request, *args, **kwargs):
+        return super().patch(request, *args, **kwargs)
+
+# class ResultMBTI(APIView):
+#     def put(self, request):
+#         user_id = request.COOKIES['user_id']
+#         user = get_object_or_404(User, id=user_id)
+#         mbti = request.GET['mbti']
+#         user.mbti = mbti
+#         print(user.mbti)
+#         print(mbti)
+
+#         return Response(status=status.HTTP_200_OK)
