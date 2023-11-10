@@ -33,8 +33,8 @@ router.register('list', UserViewSet) # 유저리스트 (테스트용)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("register/", RegisterAPIView.as_view()), # post - 회원가입
-    path("auth/", AuthAPIView.as_view()), # post - 로그인, delete - 로그아웃, get - 유저정보
+    path("users/new", RegisterAPIView.as_view()), # post - 회원가입
+    path("users/login", AuthAPIView.as_view()), # post - 로그인, delete - 로그아웃, get - 유저정보
     path("auth/refresh/", TokenRefreshView.as_view()), # jwt 토큰 재발급
     path("", include(router.urls)), #테스트용 viewset
     path("relate/", RelationMBTI.as_view()),
