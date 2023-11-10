@@ -3,9 +3,9 @@ from .base import *
 # 작업 환경
 
 # 실제 배포시 False로 바꾸기 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['52.79.235.209']
+ALLOWED_HOSTS = ['127.0.0.1']
 DJANGO_APPS +=[
 
 ]
