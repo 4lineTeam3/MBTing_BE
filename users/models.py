@@ -54,7 +54,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     #mbti 
     mbti        =models.CharField(null=True, blank=True, max_length=50)
-
     # spec
     spec1 = models.CharField(null=True,max_length=100)
     spec2 = models.CharField(null=True,max_length=100)
@@ -73,4 +72,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
 	# 사용자의 username field는 email으로 설정 (이메일로 로그인)
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'nickname'
