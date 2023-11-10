@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-j^t5^9rn8te@htep@l4dad6x5iq&0)hf$!0opy&4nzma3lb-m+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '223.194.131.109']
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     #설치한 라이브러리
     'rest_framework',
     'rest_framework_simplejwt',
+    "corsheaders",
     
 ]
 
@@ -93,6 +94,7 @@ SIMPLE_JWT = {
 }
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -178,3 +180,6 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://223.194.131.109:8000')
+CORS_ALLOW_CREDENTIALS = True

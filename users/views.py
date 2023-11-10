@@ -157,7 +157,7 @@ class RelationMBTI(generics.RetrieveAPIView):
     serializer_class = UserSerializer
 
     def retrieve(self, request, *args, **kwargs):
-        user_id = request.COOKIES['user_id']
+        user_id = request.COOKIES.get('user_id')
         user = get_object_or_404(User, id=user_id)
         user_mbti = user.mbti
         related_mbti = MBTIDic.get(user_mbti, [])  # user_mbti에 대한 관련 MBTI 가져오기
@@ -173,7 +173,7 @@ class ResultMBTI(generics.RetrieveUpdateAPIView):
     # def patch(self, request, *args, **kwargs):
     #     return super().patch(request, *args, **kwargs)
     def patch(self, request, *args, **kwargs):
-        user_id = request.COOKIES['user_id']
+        user_id = request.COOKIES.get('user_id')
         user = get_object_or_404(User, pk=user_id) #id=user_id pk값으로 변경
         ################################ 프론트 값에 따라 수정 필요################################
         #mbti = request.GET['mbti']
