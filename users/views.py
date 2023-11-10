@@ -133,7 +133,7 @@ class AuthAPIView(APIView):
 
             return res
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST, )
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
     # 로그아웃
     def delete(self, request):

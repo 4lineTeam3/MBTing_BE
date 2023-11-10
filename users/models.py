@@ -72,4 +72,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
 	# 사용자의 username field는 email으로 설정 (이메일로 로그인)
-    USERNAME_FIELD = 'nickname'
+    USERNAME_FIELD = 'email'
