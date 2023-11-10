@@ -186,8 +186,12 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', "http://localhost:3000", 'http://223.194.131.109:8000']
+
+CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://223.194.131.109:8000', "http://localhost:3000",)
 CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOWED_ORIGINS = [
+#     "https://example.com",  # 클라이언트에서 허용할 도메인을 지정
+# ]
 
 CORS_ALLOW_METHODS = [  # 허용할 옵션
     "DELETE",
@@ -214,15 +218,13 @@ CORS_ALLOW_HEADERS = [ # 허용할 헤더
 
 CORS_ALLOWED_ORIGINS = [
     "http://192.168.1.26:3000",
+    "http://127.0.0.1:3000",
     "http://localhost:3000",
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     "http://192.168.1.26:3000",
+    "http://127.0.0.1:3000",
     "http://localhost:3000",
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    "http://192.168.1.26:3000",
-    "http://localhost:3000",
-]
