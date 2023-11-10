@@ -99,10 +99,14 @@ class AuthAPIView(APIView):
     def post(self, request):
         # 유저 인증
         email2  = request.data.get("email")
+        print(email2)
+        password=request.data.get("password")
+        print(password)
         user = authenticate(
             email=request.data.get("email"), 
             password=request.data.get("password")
         )
+        print(user)
         # 이미 회원가입 된 유저일 때
         if user is not None:
             serializer = UserSerializer(user)
@@ -129,7 +133,7 @@ class AuthAPIView(APIView):
 
             return res
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_400_BAD_REQUEST, )
 
     # 로그아웃
     def delete(self, request):

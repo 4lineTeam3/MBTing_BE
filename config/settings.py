@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-j^t5^9rn8te@htep@l4dad6x5iq&0)hf$!0opy&4nzma3lb-m+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '223.194.131.109']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -55,9 +55,14 @@ AUTH_USER_MODEL = 'users.User'
 
 # jwt 토큰은 simplejwt의 JWTAuthentication으로 인증한다.
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        # 다른 렌더러들을 필요에 따라 추가
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ],
+    
 }
 
 # 추가적인 JWT 설정, 다 쓸 필요는 없지만 혹시 몰라서 다 넣었다.
@@ -181,5 +186,43 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://223.194.131.109:8000')
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', "http://localhost:3000", 'http://223.194.131.109:8000']
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = [  # 허용할 옵션
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+CORS_ALLOW_HEADERS = [ # 허용할 헤더
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    'access-control-allow-headers',
+    'access-control-allow-origin',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://192.168.1.26:3000",
+    "http://localhost:3000",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    "http://192.168.1.26:3000",
+    "http://localhost:3000",
+]
+
+CORS_ORIGIN_WHITELIST = [
+    "http://192.168.1.26:3000",
+    "http://localhost:3000",
+]
