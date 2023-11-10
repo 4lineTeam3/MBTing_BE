@@ -13,59 +13,42 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from datetime import timedelta
 import os
 from pathlib import Path
-from django.core.exceptions import ImproperlyConfigured
-import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-secret_file = BASE_DIR / 'secrets.json'
-with open(secret_file) as file:
-    secrets = json.loads(file.read())
+SECRET_KEY = 'django-insecure-j^t5^9rn8te@htep@l4dad6x5iq&0)hf$!0opy&4nzma3lb-m+'
 
-def get_secret(setting, secrets_dict=secrets):
-    try:
-        return secrets_dict[setting]
-    except KeyError:
-        error_msg=f'Set the {setting} environment variable'
-        raise ImproperlyConfigured(error_msg)
-    
-SECRET_KEY = get_secret('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-# 실제 배포시 False로 바꾸기 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
 
-DJANGO_APPS = [
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    #생성한 앱
+    'users',
+
     #설치한 라이브러리
     'rest_framework',
     'rest_framework_simplejwt',
-    'corsheaders', #cors에러 잡는 라이브러리
+    
 ]
 
-PROJECT_APPS=[
-    #생성한 앱
-    'users',
-]
-
-THIRD_PARTY_APPS = [
-]
-INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 # users 앱에서 내가 설정한 User를 사용하겠다고 설정한다.
 AUTH_USER_MODEL = 'users.User'
 
@@ -110,7 +93,6 @@ SIMPLE_JWT = {
 }
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware', #cors관련
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -119,10 +101,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000')
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'config.urls'
 
@@ -190,7 +168,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')	
